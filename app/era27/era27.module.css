@@ -115,7 +115,7 @@
   height: 100%;
   background:
     radial-gradient(circle at 50% 30%, rgba(6, 7, 19, 0.3) 0%, rgba(6, 7, 19, 0.65) 60%, rgba(6, 7, 19, 0.85) 100%),
-    linear-gradient(180deg, rgba(6, 7, 19, 0.35) 0%, rgba(6, 7, 19, 0.1) 30%, rgba(6, 7, 19, 0.5) 75%, #060713 100%);
+    linear-gradient(180deg, rgba(6, 7, 19, 0.35) 0%, rgba(6, 7, 19, 0.1) 30%, rgba(6, 7, 19, 0.45) 70%, rgba(6, 7, 19, 0.85) 100%);
   pointer-events: none;
   z-index: 0;
 }
@@ -1553,45 +1553,234 @@
    ========================================================================== */
 
 .eraFooter {
-  border-top: 1px solid var(--era-border-glass);
-  padding: 60px 6% 40px;
-  max-width: 1240px;
-  margin: 80px auto 0;
+  position: relative;
+  z-index: 2;
+  background: rgba(10, 13, 30, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 28px;
+  padding: 56px 6% 40px;
+  max-width: 1200px;
+  margin: 90px auto 40px;
   text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .footerLogo {
-  font-size: 32px;
-  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   margin-bottom: 12px;
 }
 
-.footerPresenter {
-  font-size: 12px;
+.footerBrandChrome {
+  font-size: 36px;
+  font-weight: 900;
   letter-spacing: 2px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ffffff 0%, #d8e0f5 50%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 10px rgba(255, 255, 255, 0.25));
+}
+
+.footerBrandNeon {
+  font-size: 38px;
+  font-weight: 900;
+  color: #ff2e93;
+  text-shadow: 0 0 20px rgba(255, 46, 147, 0.75), 0 0 40px rgba(255, 46, 147, 0.35);
+  font-style: italic;
+}
+
+.footerPresenter {
+  font-size: 13px;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
-  color: var(--era-text-muted);
-  margin-bottom: 24px;
+  color: #d1d8ec;
+  font-weight: 600;
+  margin-bottom: 30px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 .footerLinks {
   display: flex;
   justify-content: center;
-  gap: 28px;
-  font-size: 13px;
-  margin-bottom: 30px;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 32px;
   flex-wrap: wrap;
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.footerLinks a:hover {
+.footerContactPill,
+.eraFooter a.footerContactPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(18, 23, 50, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #ffffff;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.footerContactPill:hover,
+.eraFooter a.footerContactPill:hover {
+  background: rgba(28, 35, 78, 0.95);
+  border-color: var(--era-pink);
+  color: var(--era-pink);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 46, 147, 0.35);
+}
+
+.footerContactPill .contactIcon {
+  font-size: 14px;
+  display: inline-block;
+}
+
+.footerContactPill .contactText {
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: color 0.2s ease;
+}
+
+.footerContactPill:hover .contactText,
+.eraFooter a.footerContactPill:hover .contactText {
   color: var(--era-pink);
 }
 
+.footerWhatsAppPill,
+.eraFooter a.footerWhatsAppPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 46, 147, 0.16);
+  border: 1px solid rgba(255, 46, 147, 0.55);
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(255, 46, 147, 0.25);
+}
+
+.footerWhatsAppPill:hover,
+.eraFooter a.footerWhatsAppPill:hover {
+  background: rgba(255, 46, 147, 0.3);
+  border-color: #ff52a9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(255, 46, 147, 0.5);
+  color: #ffffff;
+}
+
+.footerWhatsAppPill .contactIcon {
+  font-size: 14px;
+  display: inline-block;
+}
+
+.footerWhatsAppPill .contactTextHighlight {
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-shadow: 0 0 10px rgba(255, 46, 147, 0.6);
+}
+
+.footerNavRoll {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px 22px;
+  flex-wrap: wrap;
+  margin: 30px auto 36px;
+  max-width: 960px;
+  padding: 14px 20px;
+  background: rgba(15, 19, 44, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+}
+
+.footerNavLink,
+.eraFooter a.footerNavLink {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #e4e7f2;
+  padding: 5px 9px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.footerNavLink:hover,
+.eraFooter a.footerNavLink:hover {
+  color: #ffffff;
+  background: rgba(255, 46, 147, 0.2);
+  text-shadow: 0 0 12px rgba(255, 46, 147, 0.7);
+  transform: translateY(-1px);
+}
+
+.footerReturnBtn,
+.eraFooter a.footerReturnBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #ffffff;
+  padding: 12px 28px;
+  border-radius: 30px;
+  border: 1px solid rgba(47, 107, 255, 0.6);
+  background: rgba(47, 107, 255, 0.2);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), 0 0 15px rgba(47, 107, 255, 0.15);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+}
+
+.footerReturnBtn:hover,
+.eraFooter a.footerReturnBtn:hover {
+  color: #ffffff;
+  border-color: #2f6bff;
+  background: rgba(47, 107, 255, 0.36);
+  box-shadow: 0 6px 25px rgba(47, 107, 255, 0.5);
+  transform: translateY(-2px);
+}
+
 .footerLegal {
-  font-size: 11px;
-  color: var(--era-text-muted);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  padding-top: 28px;
+  margin-top: 8px;
+}
+
+.footerCopyright {
+  margin: 10px 0 6px;
+  font-size: 12px;
+  color: #c9cedd;
+  letter-spacing: 0.3px;
+  line-height: 1.6;
+}
+
+.footerTagline {
+  margin: 0;
+  font-size: 12px;
+  color: #e4e7f2;
+  font-style: italic;
+  letter-spacing: 0.5px;
 }
 
 /* ==========================================================================
@@ -1651,6 +1840,48 @@
   .btnRow a,
   .btnRow button {
     width: 100%;
+  }
+
+  .eraFooter {
+    padding: 40px 18px 30px;
+    margin: 60px 12px 30px;
+    border-radius: 20px;
+  }
+  .footerBrandChrome {
+    font-size: 28px;
+  }
+  .footerBrandNeon {
+    font-size: 30px;
+  }
+  .footerPresenter {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    margin-bottom: 22px;
+  }
+  .footerLinks {
+    gap: 10px;
+  }
+  .footerContactPill,
+  .footerWhatsAppPill {
+    font-size: 12px;
+    padding: 9px 14px;
+    width: 100%;
+    justify-content: center;
+  }
+  .footerNavRoll {
+    gap: 10px 14px;
+    padding: 12px 14px;
+    margin: 22px auto 26px;
+  }
+  .footerNavLink {
+    font-size: 11px;
+    letter-spacing: 0.8px;
+  }
+  .footerReturnBtn {
+    font-size: 11px;
+    padding: 11px 20px;
+    width: 100%;
+    justify-content: center;
   }
 }
 
