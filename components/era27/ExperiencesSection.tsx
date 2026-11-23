@@ -18,7 +18,7 @@ export default function ExperiencesSection() {
         {ERA27_EXPERIENCES.map((exp) => (
           <article key={exp.id} className={styles.experienceCard}>
             {exp.badge && <span className={styles.experienceBadge}>{exp.badge}</span>}
-            <div className={styles.experienceNumber}>PILLAR {exp.number} · {exp.tag}</div>
+            <div className={styles.experienceNumber}>PILLAR {exp.number} — {exp.tag}</div>
             <h3>{exp.title}</h3>
             <div className={styles.experienceSubtitle}>{exp.subtitle}</div>
             <p>{exp.description}</p>

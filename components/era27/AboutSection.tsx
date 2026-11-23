@@ -17,7 +17,7 @@ export default function AboutSection() {
         <p className={styles.sectionEyebrow}>01 / The Concept &amp; Vision</p>
         <h2 className={styles.sectionTitle}>A New Era of Madness. Welcome 2027.</h2>
         <p className={styles.sectionDesc}>
-          ERA 27 is Advara Event Management’s New Year’s Eve flagship: a large-scale concert-grade production built to welcome 2027 in unforgettable style at Aziz Nagar, Moinabad, Hyderabad.
+          ERA 27 is Advara Event Management’s flagship New Year celebration in Aziz Nagar, Moinabad — an immersive, concert-scale experience built to make welcoming 2027 unforgettable.
         </p>
       </div>
 
@@ -27,10 +27,10 @@ export default function AboutSection() {
             One Stage. Every Language. Every Vibe.
           </h3>
           <p>
-            Unlike typical nightlife countdowns, ERA 27 is designed from the ground up as an immersive audio-visual concert. Featuring a colossal multi-tier LED stage with vivid digital floral artwork, synchronized laser beams, and cutting-edge line array sound, the music brings together anthems across languages so every guest feels the energy.
+            A massive multi-tier LED stage, immersive visuals, powerful sound and spectacular fireworks set the stage for an electrifying night of music, energy and celebration.
           </p>
           <p>
-            Whether you are dancing with your squad on the open floor, surprising someone special on the dedicated Surprise Stage, enjoying street food and artisan cheesecakes, or raising a celebratory toast at the 21+ bar counter, ERA 27 sets the standard for how Hyderabad celebrates New Year’s Eve.
+            From the open dance floor and Surprise Stage to 14+ food stalls, a 21+ bar and spectacular fireworks, ERA 27 brings music, food and unforgettable moments together for one epic night.
           </p>
           <div style={{ marginTop: '24px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
             <span
