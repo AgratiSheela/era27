@@ -7,7 +7,7 @@ import { sites } from "./scripts/vite/sites-vite-plugin";
 import { connectorPreview } from "./scripts/vite/connector-preview-plugin.mjs";
 
 const SITE_CREATOR_PLACEHOLDER_DATABASE_ID =
-  "00000000-0000-4000-8000-000000000000";
+  "f1990dae-3965-46f0-a508-9615a5eb3350";
 
 const { d1, r2 } = hostingConfig;
 
