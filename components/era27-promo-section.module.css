@@ -1,0 +1,412 @@
+/* ==========================================================================
+   ERA 27 Dedicated Promotional Section for Advara Homepage
+   Scoped CSS Module to avoid any style collisions with Advara globals.
+   ========================================================================== */
+
+.promoSection {
+  position: relative;
+  background-color: #060814;
+  color: #ffffff;
+  padding: 100px 7%;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 46, 147, 0.25);
+  border-bottom: 1px solid rgba(47, 107, 255, 0.25);
+  box-sizing: border-box;
+}
+
+/* Background Image Layer with Concert Stage */
+.stageBackground {
+  position: absolute;
+  inset: 0;
+  background-image: url('/era27-stage.jpg');
+  background-position: center 30%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0.35;
+  filter: brightness(0.9);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Atmospheric Gradients & Scrim Overlay */
+.stageOverlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 45%, rgba(255, 46, 147, 0.22) 0%, transparent 55%),
+    radial-gradient(circle at 82% 50%, rgba(47, 107, 255, 0.24) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(6, 8, 20, 0.88) 0%, rgba(6, 8, 20, 0.55) 30%, rgba(6, 8, 20, 0.65) 70%, rgba(6, 8, 20, 0.95) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Content Container */
+.container {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 50px;
+  align-items: center;
+}
+
+/* Left Column: Copy & CTAs */
+.copyCol {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Eyebrow Pill */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  color: #ff2e93;
+  margin-bottom: 18px;
+  width: fit-content;
+  background: rgba(255, 46, 147, 0.12);
+  border: 1px solid rgba(255, 46, 147, 0.28);
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
+.eyebrowDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #ff2e93;
+  box-shadow: 0 0 10px #ff2e93;
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 1;
+  }
+}
+
+/* Main Heading: ERA 27 */
+.heading {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "DM Sans", sans-serif;
+  font-size: 80px;
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -2px;
+  margin: 0 0 16px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.headingEra {
+  background: linear-gradient(180deg, #ffffff 15%, #d1d8ec 50%, #8b97bc 85%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.heading27 {
+  background: linear-gradient(135deg, #ff2e93 0%, #ff52a6 45%, #ff0077 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  filter: drop-shadow(0 0 24px rgba(255, 46, 147, 0.45));
+}
+
+/* Tagline */
+.tagline {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 32px;
+  line-height: 1.25;
+  color: #ffffff;
+  font-style: italic;
+  font-weight: 400;
+  margin: 0 0 18px;
+}
+
+.tagline strong {
+  font-style: normal;
+  color: #ff2e93;
+  font-weight: 600;
+}
+
+/* Description */
+.description {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #cbd3e8;
+  margin: 0 0 32px;
+  max-width: 540px;
+}
+
+/* Actions Row */
+.actionsRow {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+/* Main CTA Button */
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #ff2e93 0%, #e61077 100%);
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 16px 34px;
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 10px 28px rgba(255, 46, 147, 0.38),
+    0 0 20px rgba(255, 46, 147, 0.2);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.ctaButton:hover,
+.ctaButton:focus-visible {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 14px 36px rgba(255, 46, 147, 0.55),
+    0 0 30px rgba(255, 46, 147, 0.35);
+  background: linear-gradient(135deg, #ff43a2 0%, #ff1f85 100%);
+  outline: none;
+  color: #ffffff;
+}
+
+.ctaArrow {
+  font-size: 16px;
+  transition: transform 0.2s ease;
+}
+
+.ctaButton:hover .ctaArrow {
+  transform: translate(2px, -2px);
+}
+
+/* Secondary Link */
+.secondaryLink {
+  color: #8bb4ff;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease;
+}
+
+.secondaryLink:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* Supporting Text */
+.supportingText {
+  font-size: 12px;
+  color: #8b95af;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+/* Right Column: Visual Campaign Showcase Card */
+.visualCard {
+  background: rgba(13, 16, 39, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.6),
+    0 0 35px rgba(255, 46, 147, 0.12),
+    0 0 30px rgba(47, 107, 255, 0.14);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.visualCard:hover {
+  border-color: rgba(255, 46, 147, 0.35);
+  transform: translateY(-3px);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 14px;
+}
+
+.cardLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #8bb4ff;
+}
+
+.cardBadge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  background: rgba(255, 46, 147, 0.2);
+  color: #ff2e93;
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 46, 147, 0.35);
+}
+
+/* Key Event Coordinates */
+.cardMetaList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cardMetaItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13.5px;
+  color: #e2e7f5;
+}
+
+.cardMetaIcon {
+  font-size: 16px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+/* Pill Grid */
+.pillGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.featurePill {
+  font-size: 11px;
+  font-weight: 600;
+  color: #c0c8df;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 5px 12px;
+  border-radius: 16px;
+  letter-spacing: 0.3px;
+}
+
+/* Card CTA link */
+.cardExploreLink {
+  margin-top: 4px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #ff2e93;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.cardExploreLink:hover {
+  color: #ffffff;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 900px) {
+  .promoSection {
+    padding: 75px 6%;
+  }
+
+  .container {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .heading {
+    font-size: 64px;
+  }
+
+  .tagline {
+    font-size: 26px;
+  }
+
+  .description {
+    font-size: 15px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .promoSection {
+    padding: 60px 5%;
+  }
+
+  .heading {
+    font-size: 52px;
+  }
+
+  .tagline {
+    font-size: 22px;
+  }
+
+  .actionsRow {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .ctaButton {
+    width: 100%;
+    padding: 14px 24px;
+  }
+
+  .visualCard {
+    padding: 22px 18px;
+  }
+
+  .cardMetaItem {
+    font-size: 12.5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promoSection *,
+  .promoSection *::before,
+  .promoSection *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+

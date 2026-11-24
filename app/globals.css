@@ -13,3 +13,198 @@
 @media(max-width:800px){.logo .logo-word{font-size:38px}.logo .logo-descriptor{font-size:6px;letter-spacing:2.6px}}
 
 .account-link{font-size:12px;margin-left:auto;margin-right:22px}header nav{margin-left:auto;margin-right:35px}.portal{min-height:100vh}.portal header{border-bottom:1px solid #d4d7c8}.portal-nav{display:flex;gap:24px;align-items:center;font-size:12px;flex-wrap:wrap}.portal-main{max-width:1150px;margin:auto;padding:70px 6%;min-height:75vh}.portal-main h1{font-size:62px;margin-bottom:16px}.portal-subtitle{max-width:720px;margin-bottom:36px}.portal-main h2{font-size:36px}.portal-card{background:#fffdf7;border:1px solid #d4d7c8;padding:30px;border-radius:12px;margin-bottom:24px}.portal-card .eyebrow{margin-bottom:15px!important}.login-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}.login-grid .primary{display:inline-block;margin-top:15px}.admin-login-card{background:#e6eadf}.portal-toolbar,.enquiry-heading,.enquiry-actions,.portal-pagination{display:flex;align-items:center;justify-content:space-between;gap:20px}.portal-toolbar{margin-bottom:25px}.portal-toolbar>div{display:flex;gap:15px;align-items:center}.portal-button{border:1px solid #bac4b2;padding:10px 16px;background:transparent;border-radius:24px;font-size:12px}.portal button:disabled{opacity:.5;cursor:wait}.portal-empty{padding:50px 30px;text-align:center}.portal-empty p{max-width:500px;margin:20px auto}.enquiry-heading h3{font-size:30px;margin:0}.enquiry-heading p{margin:5px 0}.status-pill{background:#e6eadf;border-radius:20px;padding:8px 15px;font-size:11px;white-space:nowrap}.enquiry-details{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin:26px 0}.enquiry-details dt{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#727a6e}.enquiry-details dd{margin:7px 0 0;font-size:14px;overflow-wrap:anywhere}.enquiry-ideas{white-space:pre-wrap;overflow-wrap:anywhere;background:#f1f1e8;padding:18px;border-radius:6px}.enquiry-actions{border-top:1px solid #d4d7c8;padding-top:15px}.enquiry-actions label{max-width:250px;width:100%}.portal-pagination{justify-content:center;margin-top:30px;font-size:12px}.form-error{color:#9e321d;background:#ffebe5;padding:14px;border-radius:6px}.form-error a,.form-privacy a,.saved-enquiry a{text-decoration:underline}.form-privacy{font-size:11px!important}.saved-enquiry{padding:20px 0}.saved-enquiry>.portal-button{margin-top:20px}.new-enquiry{max-width:760px}.portal footer{border-top:1px solid #d4d7c8}.portal .primary{display:inline-block}.portal-main .portal-subtitle{overflow-wrap:anywhere}@media(max-width:800px){header nav{margin-right:15px}.account-link{margin-right:12px}.portal-main{padding:45px 6%}.portal-main h1{font-size:43px}.login-grid{grid-template-columns:1fr;gap:0}.portal-nav{gap:15px;font-size:11px}.portal-card{padding:23px}.portal-toolbar{align-items:flex-start;flex-direction:column}.portal-main h2{font-size:30px}}@media(max-width:500px){.account-link{margin-left:auto}.portal header{height:auto;min-height:95px;gap:16px;flex-wrap:wrap;padding-top:18px;padding-bottom:18px}.portal-nav{gap:16px}.enquiry-details{grid-template-columns:1fr}.enquiry-heading{align-items:flex-start}.enquiry-heading h3{font-size:25px}.portal-toolbar>div{flex-wrap:wrap}.enquiry-actions{align-items:flex-start;flex-direction:column;gap:0}.portal-main h1{font-size:38px}}
+
+/* ==========================================================================
+   ERA 27 Homepage Integration Styles (Local Preview)
+   - Top Slim Announcement Banner
+   - Header Navigation ERA 27 Link
+   ========================================================================== */
+
+/* 1. Slim Announcement Banner */
+.era27-announcement-banner {
+  display: block;
+  background: linear-gradient(90deg, #070918 0%, #17112e 50%, #070918 100%);
+  border-bottom: 1px solid rgba(255, 46, 147, 0.28);
+  padding: 8px 6%;
+  text-decoration: none;
+  color: #dbe0f2;
+  transition: all 0.25s ease;
+  z-index: 40;
+  position: relative;
+}
+
+.era27-announcement-banner:hover {
+  background: linear-gradient(90deg, #0c0f2b 0%, #221844 50%, #0c0f2b 100%);
+  color: #ffffff;
+}
+
+.era27-announcement-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 11.5px;
+  letter-spacing: 0.5px;
+}
+
+.era27-banner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 46, 147, 0.16);
+  color: #ff2e93;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 46, 147, 0.35);
+}
+
+.era27-banner-badge-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #ff2e93;
+  box-shadow: 0 0 6px #ff2e93;
+}
+
+.era27-banner-pipe {
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 11px;
+}
+
+.era27-banner-text {
+  color: #e2e6f5;
+}
+
+.era27-banner-title {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.era27-banner-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #ff2e93;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.era27-announcement-banner:hover .era27-banner-cta {
+  color: #ffffff;
+  transform: translateX(2px);
+}
+
+/* 2. Navigation Link: ERA 27 */
+.nav-era27-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #ff2e93 !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.6px;
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 4px 10px;
+  border-radius: 16px;
+  background: rgba(255, 46, 147, 0.08);
+  border: 1px solid rgba(255, 46, 147, 0.25);
+  transition: all 0.22s ease !important;
+}
+
+.nav-era27-link:hover {
+  background: rgba(255, 46, 147, 0.2);
+  border-color: #ff2e93;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(255, 46, 147, 0.25);
+}
+
+.nav-era27-pill {
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  background: #ff2e93;
+  color: #ffffff;
+  padding: 2px 5px;
+  border-radius: 10px;
+  line-height: 1;
+}
+
+.nav-era27-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ff2e93;
+  box-shadow: 0 0 6px #ff2e93;
+}
+
+/* Responsive Overrides */
+@media (max-width: 800px) {
+  .era27-announcement-inner {
+    font-size: 11px;
+    gap: 8px;
+  }
+  .nav-era27-link {
+    font-size: 10px !important;
+    padding: 3px 7px;
+  }
+}
+
+@media (max-width: 550px) {
+  header {
+    padding: 0 4% !important;
+    gap: 8px !important;
+  }
+  header nav {
+    display: flex !important;
+    gap: 6px !important;
+    margin: 0 !important;
+    margin-left: auto !important;
+    margin-right: 4px !important;
+    flex-shrink: 0 !important;
+  }
+  header nav a:not(.nav-era27-link) {
+    display: none !important;
+  }
+  .nav-era27-link {
+    font-size: 10px !important;
+    padding: 3px 7px !important;
+    letter-spacing: 0.3px;
+  }
+  .nav-era27-pill {
+    display: none;
+  }
+  header .account-link {
+    margin-left: 0 !important;
+    margin-right: 4px !important;
+    font-size: 11px !important;
+  }
+  header button {
+    padding: 9px 12px !important;
+    font-size: 9.5px !important;
+    letter-spacing: 0.3px;
+    flex-shrink: 0 !important;
+  }
+  .era27-announcement-inner {
+    flex-wrap: wrap;
+    font-size: 10.5px;
+    gap: 6px;
+    line-height: 1.4;
+    text-align: center;
+  }
+  .era27-banner-pipe {
+    display: none;
+  }
+  .era27-announcement-banner {
+    padding: 7px 4%;
+  }
+}
+
