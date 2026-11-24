@@ -88,20 +88,18 @@
   transition: all 0.2s ease;
 }
 
-/* Atmospheric Ambient Glows & Cinematic Poster Watermark */
+/* Atmospheric Ambient Glows & Cinematic Concert Stage Background */
 .posterBackgroundWatermark {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('/era27-poster.jpg');
-  background-position: center 25%;
+  background-image: url('/era27-stage.jpg');
+  background-position: center 28%;
   background-size: cover;
   background-repeat: no-repeat;
-  opacity: 0.16;
-  filter: blur(3px);
-  transform: scale(1.04);
+  opacity: 0.52;
   pointer-events: none;
   z-index: 0;
   will-change: transform;
@@ -114,8 +112,8 @@
   width: 100%;
   height: 100%;
   background:
-    radial-gradient(circle at 50% 30%, rgba(6, 7, 19, 0.3) 0%, rgba(6, 7, 19, 0.65) 60%, rgba(6, 7, 19, 0.85) 100%),
-    linear-gradient(180deg, rgba(6, 7, 19, 0.35) 0%, rgba(6, 7, 19, 0.1) 30%, rgba(6, 7, 19, 0.45) 70%, rgba(6, 7, 19, 0.85) 100%);
+    radial-gradient(ellipse 95% 70% at 50% 35%, rgba(6, 7, 19, 0.25) 0%, rgba(6, 7, 19, 0.52) 65%, rgba(6, 7, 19, 0.82) 100%),
+    linear-gradient(180deg, rgba(6, 7, 19, 0.6) 0%, rgba(6, 7, 19, 0.1) 22%, rgba(6, 7, 19, 0.35) 70%, rgba(6, 7, 19, 0.8) 100%);
   pointer-events: none;
   z-index: 0;
 }
@@ -1816,9 +1814,15 @@
   .venueGrid {
     grid-template-columns: 1fr;
   }
+  .posterBackgroundWatermark {
+    background-position: center 22%;
+  }
 }
 
 @media (max-width: 768px) {
+  .posterBackgroundWatermark {
+    background-position: 50% 20%;
+  }
   .navLinks {
     display: none;
   }
@@ -1906,6 +1910,12 @@
     padding: 11px 20px;
     width: 100%;
     justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .posterBackgroundWatermark {
+    background-position: 50% 18%;
   }
 }
 
