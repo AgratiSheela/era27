@@ -4,26 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import styles from './era27-popup.module.css';
 import { ERA27_METADATA } from '@/lib/era27-content';
 
-const SESSION_STORAGE_KEY = 'era27_popup_dismissed_session';
-const OPEN_DELAY_MS = 1800; // 1.8 seconds (within 1.5 - 2.5s PRD recommendation)
-
-function isDismissedInSession(): boolean {
-  if (typeof window === 'undefined') return true;
-  try {
-    return window.sessionStorage.getItem(SESSION_STORAGE_KEY) === 'true';
-  } catch {
-    return false;
-  }
-}
-
-function setDismissedInSession(): void {
-  if (typeof window === 'undefined') return;
-  try {
-    window.sessionStorage.setItem(SESSION_STORAGE_KEY, 'true');
-  } catch {
-    // Gracefully handle storage errors (e.g. private browsing restrictions)
-  }
-}
+const OPEN_DELAY_MS = 600; // 0.6 seconds prompt open
 
 export default function Era27Popup() {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,31 +12,41 @@ export default function Era27Popup() {
   const dialogRef = useRef<HTMLDivElement>(null);
   const previousActiveElementRef = useRef<HTMLElement | null>(null);
 
-  // Close handler with session persistence and focus restoration
+  // Close handler with focus restoration
   const handleClose = useCallback(() => {
     setIsOpen(false);
-    setDismissedInSession();
     if (previousActiveElementRef.current && typeof previousActiveElementRef.current.focus === 'function') {
       previousActiveElementRef.current.focus();
     }
   }, []);
 
-  // Safe client-side mount & delayed automatic open check
+  // Safe client-side mount & prompt automatic open on page visit
   useEffect(() => {
     setMounted(true);
 
-    if (isDismissedInSession()) {
-      return;
-    }
+    // Clean any prior session lock to ensure popup reliably displays
+    try {
+      if (typeof window !== 'undefined') {
+        window.sessionStorage.removeItem('era27_popup_dismissed_session');
+      }
+    } catch {}
 
     const timer = setTimeout(() => {
-      if (!isDismissedInSession()) {
-        previousActiveElementRef.current = document.activeElement as HTMLElement | null;
-        setIsOpen(true);
-      }
+      previousActiveElementRef.current = document.activeElement as HTMLElement | null;
+      setIsOpen(true);
     }, OPEN_DELAY_MS);
 
-    return () => clearTimeout(timer);
+    // Also listen for manual open event from any trigger on the page
+    const handleManualOpen = () => {
+      previousActiveElementRef.current = document.activeElement as HTMLElement | null;
+      setIsOpen(true);
+    };
+    window.addEventListener('open-era27-popup', handleManualOpen);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('open-era27-popup', handleManualOpen);
+    };
   }, []);
 
   // Body scroll lock while modal is open
