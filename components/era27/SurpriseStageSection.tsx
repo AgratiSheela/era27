@@ -16,18 +16,18 @@ export default function SurpriseStageSection() {
 
       <div className={styles.surpriseHeroCard}>
         <div className={styles.surpriseHeader}>
-          <div>
+          <div style={{ textAlign: 'center', width: '100%' }}>
             <span className={styles.surpriseSlotBadge}>
               🎆 Strictly 20 Slots Total (5 Reserved for Elite)
             </span>
-            <h3 style={{ fontSize: '28px', color: '#ffffff', margin: '0 0 6px' }}>
+            <h3 style={{ fontSize: '28px', color: '#ffffff', margin: '0 0 10px', textAlign: 'center' }}>
               Make It Unforgettable on Stage
             </h3>
-            <p style={{ margin: 0, color: 'var(--era-text-secondary)', maxWidth: '580px' }}>
+            <p style={{ margin: '0 auto', color: 'var(--era-text-secondary)', maxWidth: '680px', textAlign: 'center' }}>
               Whether it’s a romantic proposal, an anniversary milestone, a birthday tribute, or an unforgettable friendship surprise — take over the dedicated stage with fireworks and crowd cheers.
             </p>
           </div>
-          <div className={styles.surprisePriceTag}>
+          <div className={styles.surprisePriceTag} style={{ textAlign: 'center', width: '100%' }}>
             <div className={styles.surprisePriceValue}>
               ₹{ERA27_SURPRISE_STAGE.pricePerSlot.toLocaleString('en-IN')}
             </div>
@@ -46,34 +46,36 @@ export default function SurpriseStageSection() {
         </div>
 
         <div className={styles.surpriseActionRow}>
-          <span style={{ fontSize: '13px', fontWeight: 600, color: '#ffffff' }}>
+          <span style={{ fontSize: '13px', fontWeight: 600, color: '#ffffff', textAlign: 'center', width: '100%' }}>
             Book Your Surprise Slot Directly:
           </span>
-          <a
-            href={`tel:${ERA27_CONTACTS.primaryPhone}`}
-            className={styles.btnPrimary}
-            style={{ fontSize: '12px', padding: '12px 24px' }}
-          >
-            Call {ERA27_CONTACTS.primaryPhone} ↗
-          </a>
-          <a
-            href={`https://wa.me/${ERA27_CONTACTS.whatsappNumber}?text=${encodeURIComponent('Hi Advara, I want to book a Surprise Your Loved Ones stage slot for ERA 27 (₹9,999).')}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.btnSecondary}
-            style={{ fontSize: '12px', padding: '12px 24px' }}
-          >
-            WhatsApp Surprise Team ↗
-          </a>
-          <a
-            href={ERA27_CONTACTS.instagramEra}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.btnSecondary}
-            style={{ fontSize: '12px', padding: '12px 20px' }}
-          >
-            DM @era._27 ↗
-          </a>
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center', width: '100%' }}>
+            <a
+              href={`tel:${ERA27_CONTACTS.primaryPhone}`}
+              className={styles.btnPrimary}
+              style={{ fontSize: '12px', padding: '12px 24px' }}
+            >
+              Call {ERA27_CONTACTS.primaryPhone} ↗
+            </a>
+            <a
+              href={`https://wa.me/${ERA27_CONTACTS.whatsappNumber}?text=${encodeURIComponent('Hi Advara, I want to book a Surprise Your Loved Ones stage slot for ERA 27 (₹9,999).')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.btnSecondary}
+              style={{ fontSize: '12px', padding: '12px 24px' }}
+            >
+              WhatsApp Surprise Team ↗
+            </a>
+            <a
+              href={ERA27_CONTACTS.instagramEra}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.btnSecondary}
+              style={{ fontSize: '12px', padding: '12px 20px' }}
+            >
+              DM @era._27 ↗
+            </a>
+          </div>
         </div>
       </div>
     </section>

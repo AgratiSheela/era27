@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import styles from '@/app/era27/era27.module.css';
-import { ERA27_METADATA } from '@/lib/era27-content';
+import { ERA27_METADATA, getBookingModeContent } from '@/lib/era27-content';
 
 interface TimeLeft {
   days: number;
@@ -40,6 +40,8 @@ export default function HeroSection() {
     const interval = setInterval(update, 1000);
     return () => clearInterval(interval);
   }, []);
+
+  const bookingContent = getBookingModeContent();
 
   return (
     <section id="hero" className={styles.heroSection}>
@@ -101,11 +103,16 @@ export default function HeroSection() {
 
       {/* Primary Action Buttons */}
       <div className={styles.btnRow}>
-        <a href="#passes" className={styles.btnPrimary}>
-          Explore Passes & Pricing ↗
+        <a
+          href={bookingContent.heroPrimaryCtaHref}
+          target={bookingContent.heroPrimaryCtaTarget}
+          rel={bookingContent.heroPrimaryCtaTarget === '_blank' ? 'noopener noreferrer' : undefined}
+          className={styles.btnPrimary}
+        >
+          {bookingContent.heroPrimaryCtaText}
         </a>
-        <a href="#rsvp" className={styles.btnSecondary}>
-          Pre-Book Interest (10% Off) ↗
+        <a href={bookingContent.heroSecondaryCtaHref} className={styles.btnSecondary}>
+          {bookingContent.heroSecondaryCtaText}
         </a>
       </div>
 

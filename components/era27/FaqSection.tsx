@@ -31,7 +31,7 @@ export default function FaqSection() {
   return (
     <section id="faq" className={styles.contentSection}>
       <div className={styles.sectionHeader}>
-        <p className={styles.sectionEyebrow}>11 / Rules &amp; Guidelines</p>
+        <p className={styles.sectionEyebrow}>10 / Rules &amp; Guidelines</p>
         <h2 className={styles.sectionTitle}>Frequently Asked Questions</h2>
         <p className={styles.sectionDesc}>
           Everything you need to know about age policies, ticket inclusions, wallet balance redemption, and entry protocols for ERA 27.

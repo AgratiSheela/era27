@@ -23,16 +23,16 @@ export default function AboutSection() {
 
       <div className={styles.aboutGrid}>
         <article className={styles.aboutStoryCard}>
-          <h3 style={{ fontSize: '24px', color: '#ffffff', marginBottom: '16px' }}>
+          <h3 style={{ fontSize: '24px', color: '#ffffff', marginBottom: '16px', textAlign: 'center' }}>
             One Stage. Every Language. Every Vibe.
           </h3>
-          <p>
+          <p style={{ textAlign: 'center' }}>
             A massive multi-tier LED stage, immersive visuals, powerful sound and spectacular fireworks set the stage for an electrifying night of music, energy and celebration.
           </p>
-          <p>
+          <p style={{ textAlign: 'center' }}>
             From the open dance floor and Surprise Stage to 14+ food stalls, a 21+ bar and spectacular fireworks, ERA 27 brings music, food and unforgettable moments together for one epic night.
           </p>
-          <div style={{ marginTop: '24px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+          <div style={{ marginTop: '24px', display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center' }}>
             <span
               style={{
                 fontSize: '11px',

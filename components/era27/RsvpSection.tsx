@@ -1,11 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '@/app/era27/era27.module.css';
 import {
   ERA27_SINGLE_PASSES,
   ERA27_GROUP_PASSES,
   ERA27_CONTACTS,
+  ERA27_BOOKING_CONFIG,
+  getBookingModeContent,
 } from '@/lib/era27-content';
 
 interface RsvpSectionProps {
@@ -29,6 +31,9 @@ interface FormErrors {
 }
 
 export default function RsvpSection({ preselectedPass }: RsvpSectionProps) {
+  const content = getBookingModeContent();
+  const { isPreBooking } = content;
+
   const [formData, setFormData] = useState<FormState>({
     fullName: '',
     phone: '',
@@ -39,10 +44,12 @@ export default function RsvpSection({ preselectedPass }: RsvpSectionProps) {
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [referenceCode, setReferenceCode] = useState('');
+  const [serverMessage, setServerMessage] = useState<string | null>(null);
 
-  // Update passType when preselectedPass prop changes from PassesSection
+  // Update passType when preselectedPass changes from PassesSection
   useEffect(() => {
     if (preselectedPass) {
       setFormData((prev) => ({ ...prev, passType: preselectedPass }));
@@ -50,15 +57,25 @@ export default function RsvpSection({ preselectedPass }: RsvpSectionProps) {
   }, [preselectedPass]);
 
   const allPassOptions = [
-    ...ERA27_SINGLE_PASSES.map((p) => ({ name: p.name, label: `${p.name} Pass (₹${p.basePrice})` })),
-    ...ERA27_GROUP_PASSES.map((p) => ({ name: p.name, label: `${p.name} Group Pass (${p.guests} Guests — ₹${p.basePrice})` })),
+    ...ERA27_SINGLE_PASSES.map((p) => ({
+      name: p.name,
+      label: `${p.name} Pass (₹${p.basePrice.toLocaleString('en-IN')}${
+        p.couponPrice ? ` → Early Bird ₹${p.couponPrice.toLocaleString('en-IN')}` : ''
+      })`,
+    })),
+    ...ERA27_GROUP_PASSES.map((p) => ({
+      name: p.name,
+      label: `${p.name} Group Pass (${p.guests} Guests — ₹${p.basePrice.toLocaleString('en-IN')}${
+        p.couponPrice ? ` → Early Bird ₹${p.couponPrice.toLocaleString('en-IN')}` : ''
+      })`,
+    })),
   ];
 
   const validate = (): boolean => {
     const newErrors: FormErrors = {};
 
-    if (!formData.fullName.trim()) {
-      newErrors.fullName = 'Please enter your full name.';
+    if (!formData.fullName.trim() || formData.fullName.trim().length < 2) {
+      newErrors.fullName = 'Please enter your full name (at least 2 characters).';
     }
 
     const cleanPhone = formData.phone.replace(/\D/g, '');
@@ -78,19 +95,56 @@ export default function RsvpSection({ preselectedPass }: RsvpSectionProps) {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
-    // Generate frontend confirmation reference
+    setIsSubmitting(true);
+    setServerMessage(null);
+
+    // Fallback reference code in case of network issue
     const randomHex = Math.random().toString(16).substring(2, 6).toUpperCase();
-    const code = `ERA27-PRB-${randomHex}`;
-    setReferenceCode(code);
-    setSubmitted(true);
+    const fallbackCode = isPreBooking ? `ERA27-PRB-${randomHex}` : `ERA27-TKT-${randomHex}`;
+
+    try {
+      const res = await fetch('/api/era27/prebook', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: formData.fullName.trim(),
+          phone: formData.phone.trim(),
+          email: formData.email.trim(),
+          passType: formData.passType,
+          quantity: formData.quantity,
+          notes: formData.notes.trim(),
+        }),
+      });
+
+      const data = (await res.json()) as {
+        referenceCode?: string;
+        message?: string;
+      };
+
+      if (res.ok && data.referenceCode) {
+        setReferenceCode(data.referenceCode);
+        setServerMessage(data.message || null);
+      } else {
+        // Fallback to client reference
+        setReferenceCode(fallbackCode);
+      }
+    } catch {
+      // Local fallback on connection error
+      setReferenceCode(fallbackCode);
+    } finally {
+      setIsSubmitting(false);
+      setSubmitted(true);
+    }
   };
 
   const handleReset = () => {
     setSubmitted(false);
+    setReferenceCode('');
+    setServerMessage(null);
     setFormData({
       fullName: '',
       phone: '',
@@ -102,7 +156,7 @@ export default function RsvpSection({ preselectedPass }: RsvpSectionProps) {
     setErrors({});
   };
 
-  // Find selected pass details for pricing breakdown
+  // Pricing calculations
   const selectedPassDetails = [
     ...ERA27_SINGLE_PASSES,
     ...ERA27_GROUP_PASSES,
@@ -119,11 +173,9 @@ export default function RsvpSection({ preselectedPass }: RsvpSectionProps) {
   return (
     <section id="rsvp" className={styles.contentSection}>
       <div className={styles.sectionHeader}>
-        <p className={styles.sectionEyebrow}>09 / Priority Access</p>
-        <h2 className={styles.sectionTitle}>Pre-Book Interest (10% Off)</h2>
-        <p className={styles.sectionDesc}>
-          Register your early-bird interest for ERA 27. Claim your 10% coupon discount and secure your priority entry before the 1,500 venue capacity is reached.
-        </p>
+        <p className={styles.sectionEyebrow}>{content.rsvpSectionEyebrow}</p>
+        <h2 className={styles.sectionTitle}>{content.rsvpSectionTitle}</h2>
+        <p className={styles.sectionDesc}>{content.rsvpSectionDesc}</p>
       </div>
 
       <div className={styles.rsvpCard}>
@@ -131,40 +183,52 @@ export default function RsvpSection({ preselectedPass }: RsvpSectionProps) {
           /* Confirmation Screen */
           <div className={styles.confirmationCard}>
             <span className={styles.confirmationBadge}>
-              ✓ Interest Registered (Frontend Demonstration)
+              {content.confirmationBadge}
             </span>
-            <h3 style={{ fontSize: '28px', color: '#ffffff', margin: '0 0 6px' }}>
-              You Are on the Priority List!
+
+            <h3 style={{ fontSize: '26px', color: '#ffffff', margin: '0 0 6px' }}>
+              {content.confirmationHeading}
             </h3>
-            <p style={{ color: 'var(--era-text-secondary)', fontSize: '13px', margin: '0 0 20px' }}>
-              Thank you, <b>{formData.fullName}</b>. Your pre-booking enquiry details have been verified locally.
+
+            <p style={{ color: 'var(--era-text-secondary)', fontSize: '13px', margin: '0 0 18px' }}>
+              Thank you, <b>{formData.fullName}</b>.{' '}
+              {isPreBooking
+                ? 'Your early-bird pre-booking enquiry has been registered and your 10% discount is secured.'
+                : 'Your pass booking request has been recorded.'}
             </p>
 
             <div className={styles.confirmationRefCode}>
-              Reference: <span style={{ color: 'var(--era-pink)' }}>{referenceCode}</span>
+              Reference ID:{' '}
+              <span style={{ color: 'var(--era-pink)', letterSpacing: '1px' }}>
+                {referenceCode}
+              </span>
             </div>
 
             <div className={styles.confirmationSummaryList}>
               <div className={styles.confirmationSummaryRow}>
-                <span style={{ color: 'var(--era-text-muted)' }}>Selected Pass:</span>
+                <span style={{ color: 'var(--era-text-muted)' }}>Selected Tier:</span>
                 <strong>{formData.passType} Pass</strong>
               </div>
               <div className={styles.confirmationSummaryRow}>
-                <span style={{ color: 'var(--era-text-muted)' }}>Booking Quantity:</span>
-                <strong>{formData.quantity} {formData.quantity > 1 ? 'passes' : 'pass'}</strong>
+                <span style={{ color: 'var(--era-text-muted)' }}>Quantity:</span>
+                <strong>
+                  {formData.quantity} {formData.quantity > 1 ? 'passes' : 'pass'}
+                </strong>
               </div>
               <div className={styles.confirmationSummaryRow}>
                 <span style={{ color: 'var(--era-text-muted)' }}>Contact Mobile:</span>
                 <span>{formData.phone}</span>
               </div>
               <div className={styles.confirmationSummaryRow}>
-                <span style={{ color: 'var(--era-text-muted)' }}>Email:</span>
+                <span style={{ color: 'var(--era-text-muted)' }}>Email Address:</span>
                 <span>{formData.email}</span>
               </div>
               {selectedPassDetails && (
                 <>
                   <div className={styles.confirmationSummaryRow}>
-                    <span style={{ color: 'var(--era-text-muted)' }}>Early Bird Cost (Est):</span>
+                    <span style={{ color: 'var(--era-text-muted)' }}>
+                      {isPreBooking ? 'Early Bird Cost (10% Off):' : 'Total Pass Cost:'}
+                    </span>
                     <strong style={{ color: 'var(--era-pink)' }}>
                       ₹{estimatedTotal.toLocaleString('en-IN')}
                     </strong>
@@ -181,34 +245,34 @@ export default function RsvpSection({ preselectedPass }: RsvpSectionProps) {
               )}
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '14px', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
               <a
                 href={`https://wa.me/${ERA27_CONTACTS.whatsappNumber}?text=${encodeURIComponent(
-                  `Hi Advara team, I registered pre-booking interest for ERA 27 (Ref: ${referenceCode}). Name: ${formData.fullName}, Pass: ${formData.passType}, Qty: ${formData.quantity}.`
+                  `Hi Advara team, I registered pre-booking interest for ERA 27 (Ref: ${referenceCode}). Name: ${formData.fullName}, Pass: ${formData.passType}, Qty: ${formData.quantity}. Please notify me when official ticket passes open.`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.btnPrimary}
-                style={{ fontSize: '12px', padding: '12px 24px' }}
+                style={{ fontSize: '12px', padding: '12px 22px' }}
               >
-                Send via WhatsApp ↗
+                Confirm via WhatsApp ↗
               </a>
               <button
                 type="button"
                 className={styles.btnSecondary}
                 onClick={handleReset}
-                style={{ fontSize: '12px', padding: '12px 24px' }}
+                style={{ fontSize: '12px', padding: '12px 22px' }}
               >
-                Submit Another Enquiry
+                Register Another Enquiry
               </button>
             </div>
 
-            <p className={styles.demoNotice}>
-              ℹ️ <b>Frontend Only Demonstration:</b> No payment was collected and no external server transaction was executed.
+            <p className={styles.demoNotice} style={{ marginTop: '20px' }}>
+              ℹ️ <b>Two-Stage Launch Policy:</b> {ERA27_BOOKING_CONFIG.preBookingNotice}
             </p>
           </div>
         ) : (
-          /* Pre-Booking Form */
+          /* Form Screen */
           <form onSubmit={handleSubmit} noValidate>
             <div className={styles.formGrid}>
               <div className={styles.formGroup}>
@@ -290,28 +354,39 @@ export default function RsvpSection({ preselectedPass }: RsvpSectionProps) {
                   className={styles.formInput}
                   value={formData.quantity}
                   onChange={(e) =>
-                    setFormData({ ...formData, quantity: Math.max(1, parseInt(e.target.value, 10) || 1) })
+                    setFormData({
+                      ...formData,
+                      quantity: Math.max(1, parseInt(e.target.value, 10) || 1),
+                    })
                   }
                 />
               </div>
 
               <div className={styles.formGroup}>
                 <label className={styles.formLabel}>
-                  Estimated Early Bird Price (10% Off)
+                  {isPreBooking
+                    ? 'Estimated Early Bird Total (10% Off)'
+                    : 'Estimated Pass Total'}
                 </label>
                 <div
                   style={{
                     background: 'rgba(6, 7, 19, 0.5)',
                     border: '1px solid var(--era-border-glass)',
                     borderRadius: '8px',
-                    padding: '14px 16px',
+                    padding: '13px 16px',
                     fontSize: '15px',
                     fontWeight: 700,
                     color: 'var(--era-pink)',
                   }}
                 >
                   ₹{estimatedTotal.toLocaleString('en-IN')}{' '}
-                  <span style={{ fontSize: '11px', color: 'var(--era-text-muted)', fontWeight: 400 }}>
+                  <span
+                    style={{
+                      fontSize: '11px',
+                      color: 'var(--era-text-muted)',
+                      fontWeight: 400,
+                    }}
+                  >
                     ({formData.quantity} × {formData.passType})
                   </span>
                 </div>
@@ -323,8 +398,8 @@ export default function RsvpSection({ preselectedPass }: RsvpSectionProps) {
                 </label>
                 <textarea
                   id="notes"
-                  rows={3}
-                  placeholder="Planning a proposal, large group celebration, or custom dietary requests? Let us know here."
+                  rows={2}
+                  placeholder="Planning a surprise celebration, large group table, or dietary requests? Let us know here."
                   className={styles.formTextarea}
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
@@ -333,12 +408,17 @@ export default function RsvpSection({ preselectedPass }: RsvpSectionProps) {
             </div>
 
             <div className={styles.formDisclaimerNotice}>
-              🔒 <b>Privacy &amp; Policy:</b> Your details are collected strictly to reserve your early-bird spot. No online payment is processed at this stage. Official pass collection and ticketing will open prior to the event.
+              🔒 <b>Two-Stage Launch Policy:</b> {ERA27_BOOKING_CONFIG.preBookingNotice}
             </div>
 
             <div style={{ textAlign: 'center' }}>
-              <button type="submit" className={styles.btnPrimary} style={{ width: '100%', maxWidth: '380px' }}>
-                Register Pre-Booking Interest (10% Off) ↗
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={styles.btnPrimary}
+                style={{ width: '100%', maxWidth: '380px' }}
+              >
+                {isSubmitting ? 'Registering...' : content.formSubmitText}
               </button>
             </div>
           </form>
@@ -347,4 +427,3 @@ export default function RsvpSection({ preselectedPass }: RsvpSectionProps) {
     </section>
   );
 }
-

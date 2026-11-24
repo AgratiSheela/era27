@@ -39,13 +39,15 @@ export default function VenueSection() {
 
       <div className={styles.venueGrid}>
         <div className={styles.venueCard}>
-          <span className={styles.venueBadge}>
-            📍 Exact Landmark &amp; Map Pin Announcing Soon
-          </span>
-          <h3 style={{ fontSize: '24px', color: '#ffffff', margin: '0 0 10px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '14px' }}>
+            <span className={styles.venueBadge}>
+              📍 Exact Landmark &amp; Map Pin Announcing Soon
+            </span>
+          </div>
+          <h3 style={{ fontSize: '24px', color: '#ffffff', margin: '0 0 10px', textAlign: 'center' }}>
             Venue Coordination &amp; Access
           </h3>
-          <p>
+          <p style={{ textAlign: 'center' }}>
             <b>Date:</b> {ERA27_METADATA.dateDisplay}<br />
             <b>Gates Open:</b> {ERA27_METADATA.doorsOpen}<br />
             <b>Main Concert:</b> 6:00 PM Onwards into 2027
@@ -80,7 +82,7 @@ export default function VenueSection() {
             </a>
           </div>
 
-          <p style={{ fontSize: '12px', color: 'var(--era-text-muted)', margin: 0 }}>
+          <p style={{ fontSize: '12px', color: 'var(--era-text-muted)', margin: 0, textAlign: 'center' }}>
             * Shuttle assistance and cab drop coordinates will be provided to all registered ticket holders.
           </p>
         </div>

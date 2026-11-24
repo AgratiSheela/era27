@@ -1,21 +1,21 @@
 'use client';
 
 import styles from '@/app/era27/era27.module.css';
-import { ERA27_METADATA, ERA27_CONTACTS } from '@/lib/era27-content';
+import { ERA27_METADATA, ERA27_CONTACTS, ERA27_BOOKING_CONFIG } from '@/lib/era27-content';
 
 export default function ContactFooter() {
   const footerNav = [
-    { label: 'About', href: '#about' },
-    { label: 'Venue', href: '#venue' },
-    { label: 'Schedule', href: '#schedule' },
-    { label: 'Experiences', href: '#experiences' },
-    { label: 'Stalls', href: '#stalls' },
-    { label: 'Passes', href: '#passes' },
-    { label: 'Surprise Stage', href: '#surprise' },
-    { label: 'Gallery', href: '#gallery' },
-    { label: 'Pre-Book RSVP', href: '#rsvp' },
-    { label: 'Sponsors', href: '#sponsors' },
-    { label: 'FAQ', href: '#faq' },
+    { label: 'About', href: '#about', external: false },
+    { label: 'Venue', href: '#venue', external: false },
+    { label: 'Schedule', href: '#schedule', external: false },
+    { label: 'Experiences', href: '#experiences', external: false },
+    { label: 'Stalls', href: '#stalls', external: false },
+    { label: 'Passes', href: '#passes', external: false },
+    { label: 'Surprise Stage', href: '#surprise', external: false },
+    { label: 'Gallery', href: '#gallery', external: false },
+    { label: 'Pre-Book (10% Off) ↗', href: ERA27_BOOKING_CONFIG.googleFormUrl, external: true },
+    { label: 'Sponsors', href: '#sponsors', external: false },
+    { label: 'FAQ', href: '#faq', external: false },
   ];
 
   return (
@@ -75,7 +75,13 @@ export default function ContactFooter() {
       {/* Navigation Roll */}
       <nav aria-label="Footer Navigation" className={styles.footerNavRoll}>
         {footerNav.map((item) => (
-          <a key={item.href} href={item.href} className={styles.footerNavLink}>
+          <a
+            key={item.label}
+            href={item.href}
+            target={item.external ? '_blank' : undefined}
+            rel={item.external ? 'noopener noreferrer' : undefined}
+            className={styles.footerNavLink}
+          >
             {item.label}
           </a>
         ))}

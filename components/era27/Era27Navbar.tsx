@@ -15,7 +15,6 @@ export default function Era27Navbar() {
     { label: 'Passes', href: '#passes' },
     { label: 'Surprise Stage', href: '#surprise' },
     { label: 'Gallery', href: '#gallery' },
-    { label: 'RSVP', href: '#rsvp' },
     { label: 'Sponsors', href: '#sponsors' },
     { label: 'FAQ', href: '#faq' },
   ];

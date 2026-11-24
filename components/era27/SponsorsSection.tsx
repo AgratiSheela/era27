@@ -7,7 +7,7 @@ export default function SponsorsSection() {
   return (
     <section id="sponsors" className={styles.contentSection}>
       <div className={styles.sectionHeader}>
-        <p className={styles.sectionEyebrow}>10 / Partners &amp; Investors</p>
+        <p className={styles.sectionEyebrow}>09 / Partners &amp; Investors</p>
         <h2 className={styles.sectionTitle}>Sponsorship &amp; Investment Packages</h2>
         <p className={styles.sectionDesc}>
           Partner with Advara for ERA 27. Gain high-impact visibility, brand activations, and executive hospitality before 1,500 celebrating guests.

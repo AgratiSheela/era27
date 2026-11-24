@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import styles from './era27.module.css';
 
 // Phase 2 Modular Microsite Components
@@ -15,18 +14,11 @@ import MenuSection from '@/components/era27/MenuSection';
 import PassesSection from '@/components/era27/PassesSection';
 import SurpriseStageSection from '@/components/era27/SurpriseStageSection';
 import GallerySection from '@/components/era27/GallerySection';
-import RsvpSection from '@/components/era27/RsvpSection';
 import SponsorsSection from '@/components/era27/SponsorsSection';
 import FaqSection from '@/components/era27/FaqSection';
 import ContactFooter from '@/components/era27/ContactFooter';
 
 export default function Era27Page() {
-  const [selectedPass, setSelectedPass] = useState<string>('Gold');
-
-  const handleSelectPass = (passName: string) => {
-    setSelectedPass(passName);
-  };
-
   return (
     <>
       {/* Cinematic Poster Watermark & Ambient Atmospheric Layers */}
@@ -66,7 +58,7 @@ export default function Era27Page() {
         <MenuSection />
 
         {/* 9. Tickets, Passes & Wallet Model */}
-        <PassesSection onSelectPass={handleSelectPass} />
+        <PassesSection />
 
         {/* 10. Surprise Your Loved Ones Stage */}
         <SurpriseStageSection />
@@ -74,17 +66,14 @@ export default function Era27Page() {
         {/* 11. Gallery & Visual Teasers */}
         <GallerySection />
 
-        {/* 12. Frontend-Only Pre-Booking Interest Form */}
-        <RsvpSection preselectedPass={selectedPass} />
-
-        {/* 13. Sponsorship & Investor Packages */}
+        {/* 12. Sponsorship & Investor Packages */}
         <SponsorsSection />
 
-        {/* 14. Interactive FAQ Accordion */}
+        {/* 13. Interactive FAQ Accordion */}
         <FaqSection />
       </main>
 
-      {/* 15. Standalone Footer & Contacts */}
+      {/* 14. Standalone Footer & Contacts */}
       <ContactFooter />
     </>
   );

@@ -1,77 +1,194 @@
 'use client';
 
-import { useState } from 'react';
-import styles from '@/app/era27/era27.module.css';
-import { ERA27_STALLS } from '@/lib/era27-content';
+import React, { useState } from 'react';
+import menuStyles from './menu-section.module.css';
+import { ERA27_STALLS, StallItem } from '@/lib/era27-content';
 
-type StallCategory = 'All' | 'Food' | 'Desserts' | 'Drinks' | 'Fun Zone';
+type StallCategoryFilter = 'All' | 'Food' | 'Desserts' | 'Drinks' | 'Fun Zone';
 
-export default function MenuSection() {
-  const [activeCategory, setActiveCategory] = useState<StallCategory>('All');
+const CATEGORIES_ORDER: ('Food' | 'Desserts' | 'Drinks' | 'Fun Zone')[] = [
+  'Food',
+  'Desserts',
+  'Drinks',
+  'Fun Zone',
+];
 
-  const categories: StallCategory[] = ['All', 'Food', 'Desserts', 'Drinks', 'Fun Zone'];
+const CATEGORY_META: Record<'Food' | 'Desserts' | 'Drinks' | 'Fun Zone', {
+  headerClass: string;
+  dividerClass: string;
+  cardClass: string;
+  filterClass: string;
+  color: string;
+}> = {
+  'Food': {
+    headerClass: menuStyles.headerFood,
+    dividerClass: menuStyles.dividerFood,
+    cardClass: menuStyles.cardFood,
+    filterClass: menuStyles.filterBtnFood,
+    color: '#FF398F',
+  },
+  'Desserts': {
+    headerClass: menuStyles.headerDesserts,
+    dividerClass: menuStyles.dividerDesserts,
+    cardClass: menuStyles.cardDesserts,
+    filterClass: menuStyles.filterBtnDesserts,
+    color: '#B58AFF',
+  },
+  'Drinks': {
+    headerClass: menuStyles.headerDrinks,
+    dividerClass: menuStyles.dividerDrinks,
+    cardClass: menuStyles.cardDrinks,
+    filterClass: menuStyles.filterBtnDrinks,
+    color: '#38DCCB',
+  },
+  'Fun Zone': {
+    headerClass: menuStyles.headerFunzone,
+    dividerClass: menuStyles.dividerFunzone,
+    cardClass: menuStyles.cardFunzone,
+    filterClass: menuStyles.filterBtnFunzone,
+    color: '#FFC36B',
+  },
+};
 
-  const filteredStalls = activeCategory === 'All'
-    ? ERA27_STALLS
-    : ERA27_STALLS.filter((stall) => stall.category === activeCategory);
+interface StallCardProps {
+  stall: StallItem;
+  category: 'Food' | 'Desserts' | 'Drinks' | 'Fun Zone';
+  index: number;
+}
+
+function StallCardItem({ stall, category, index }: StallCardProps) {
+  const cardStyleClass = CATEGORY_META[category]?.cardClass || menuStyles.cardFood;
 
   return (
-    <section id="stalls" className={styles.contentSection}>
-      <div className={styles.sectionHeader}>
-        <p className={styles.sectionEyebrow}>05 / Food, Drinks &amp; Fun</p>
-        <h2 className={styles.sectionTitle}>Curated Festival Stalls &amp; Menu</h2>
-        <p className={styles.sectionDesc}>
-          From savory street snacks and aromatic biriyani to luxury cheesecakes and a 21+ cocktail bar. Pass wallet money is redeemable across all food and dessert stalls.
+    <article
+      className={`${menuStyles.stallCard} ${cardStyleClass}`}
+      style={{ '--card-index': index } as React.CSSProperties}
+    >
+      <span className={menuStyles.stallName}>{stall.name}</span>
+      {stall.ageRestricted && (
+        <span className={menuStyles.ageBadge}>21+</span>
+      )}
+    </article>
+  );
+}
+
+export default function MenuSection() {
+  const [activeCategory, setActiveCategory] = useState<StallCategoryFilter>('All');
+
+  const filterTabs: {
+    label: StallCategoryFilter;
+    count: number;
+    color?: string;
+    filterClass?: string;
+  }[] = [
+    { label: 'All', count: ERA27_STALLS.length, color: 'linear-gradient(135deg, #FF398F, #38DCCB)' },
+    { label: 'Food', count: ERA27_STALLS.filter(s => s.category === 'Food').length, color: '#FF398F', filterClass: menuStyles.filterBtnFood },
+    { label: 'Desserts', count: ERA27_STALLS.filter(s => s.category === 'Desserts').length, color: '#B58AFF', filterClass: menuStyles.filterBtnDesserts },
+    { label: 'Drinks', count: ERA27_STALLS.filter(s => s.category === 'Drinks').length, color: '#38DCCB', filterClass: menuStyles.filterBtnDrinks },
+    { label: 'Fun Zone', count: ERA27_STALLS.filter(s => s.category === 'Fun Zone').length, color: '#FFC36B', filterClass: menuStyles.filterBtnFunzone },
+  ];
+
+  const categoriesToDisplay = activeCategory === 'All'
+    ? CATEGORIES_ORDER
+    : CATEGORIES_ORDER.filter(c => c === activeCategory);
+
+  return (
+    <section id="stalls" className={menuStyles.menuSection}>
+      {/* Compact Section Header */}
+      <div className={menuStyles.sectionHeader}>
+        <span className={menuStyles.eyebrow}>05 / Food, Drinks &amp; Fun</span>
+        <h2 className={menuStyles.title}>Curated Festival Stalls &amp; Menu</h2>
+        <p className={menuStyles.description}>
+          All 13 festival stalls accept pass wallet money. Pre-book in advance or order on-site.
         </p>
       </div>
 
-      {/* Category Filter Pills */}
-      <div className={styles.filterTabRow} role="tablist" aria-label="Stall categories">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            role="tab"
-            aria-selected={activeCategory === cat}
-            className={`${styles.filterTabBtn} ${activeCategory === cat ? styles.filterTabActive : ''}`}
-            onClick={() => setActiveCategory(cat)}
-          >
-            {cat} {cat === 'All' ? `(${ERA27_STALLS.length})` : ''}
-          </button>
-        ))}
+      {/* Compact Category Filter Tabs */}
+      <div className={menuStyles.filterStickyContainer}>
+        <div className={menuStyles.filterScrollTrack} role="tablist" aria-label="Stall categories">
+          {filterTabs.map((tab) => {
+            const isActive = activeCategory === tab.label;
+            const activeSpecificClass = isActive && tab.filterClass ? tab.filterClass : '';
+
+            return (
+              <button
+                key={tab.label}
+                role="tab"
+                aria-selected={isActive}
+                className={`${menuStyles.filterBtn} ${isActive ? menuStyles.filterBtnActive : ''} ${activeSpecificClass}`}
+                onClick={() => setActiveCategory(tab.label)}
+              >
+                <span
+                  className={menuStyles.filterDot}
+                  style={{
+                    background: tab.color,
+                    boxShadow: isActive ? `0 0 6px ${tab.color.startsWith('#') ? tab.color : '#FF398F'}` : 'none',
+                  }}
+                  aria-hidden="true"
+                />
+                <span>{tab.label}</span>
+                <span className={menuStyles.filterCount}>{tab.count}</span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      {/* Stalls Grid */}
-      <div className={styles.stallGrid}>
-        {filteredStalls.map((stall, idx) => (
-          <article key={idx} className={styles.stallCard}>
-            <span className={styles.stallCategoryBadge}>{stall.category}</span>
-            <h4>{stall.name}</h4>
-            <p>{stall.description}</p>
-            {stall.ageRestricted && (
-              <span className={styles.ageRestrictedBadge}>
-                🔞 21+ Physical ID Required
-              </span>
-            )}
-          </article>
-        ))}
+      {/* Balanced Dark Backdrop Wrapper to Pop Stalls Over Festival Background */}
+      <div className={menuStyles.directoryBackdrop}>
+        <div className={menuStyles.directoryContainer} key={activeCategory}>
+          {categoriesToDisplay.map((category) => {
+            const categoryStalls = ERA27_STALLS.filter((s) => s.category === category);
+            if (categoryStalls.length === 0) return null;
+
+            const meta = CATEGORY_META[category];
+
+            return (
+              <div key={category} className={menuStyles.categoryGroup}>
+                {activeCategory === 'All' && (
+                  <>
+                    <div className={`${menuStyles.categoryHeader} ${meta.headerClass}`}>
+                      <h3 className={menuStyles.categoryTitle}>
+                        <span
+                          style={{
+                            width: '4px',
+                            height: '10px',
+                            borderRadius: '2px',
+                            background: meta.color,
+                            display: 'inline-block',
+                          }}
+                          aria-hidden="true"
+                        />
+                        <span>{category}</span>
+                      </h3>
+                      <span className={menuStyles.categoryCountBadge}>
+                        {categoryStalls.length}
+                      </span>
+                    </div>
+                    <div className={`${menuStyles.categoryDivider} ${meta.dividerClass}`} aria-hidden="true" />
+                  </>
+                )}
+
+                <div className={menuStyles.stallsGrid}>
+                  {categoryStalls.map((stall, idx) => (
+                    <StallCardItem key={stall.name} stall={stall} category={category} index={idx} />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
-      <div style={{ textAlign: 'center', marginTop: '36px' }}>
-        <div
-          style={{
-            display: 'inline-block',
-            background: 'rgba(47, 107, 255, 0.1)',
-            border: '1px solid rgba(47, 107, 255, 0.3)',
-            borderRadius: '12px',
-            padding: '14px 24px',
-            fontSize: '13px',
-            color: '#a4c2ff',
-          }}
-        >
-          💡 <b>Tip:</b> Gold, Platinum, Elite &amp; all Group passes include bundled wallet money. You can pre-book stall orders in advance so your food is ready when you arrive.
+      {/* Slim Wallet Benefit Note */}
+      <div className={menuStyles.infoCallout}>
+        <div className={menuStyles.infoCalloutBox}>
+          <span>💡</span>
+          <span>
+            <strong style={{ color: '#ffffff' }}>Pass Wallet Money:</strong> Redeemable at all food and dessert counters.
+          </span>
         </div>
       </div>
     </section>
   );
 }
-

@@ -1,0 +1,413 @@
+/* ==========================================================================
+   ERA 27 — Vertical Ticket Cards Layout & Styling
+   Matching Reference PDF (ERA27-Tickets-and-Event-Details.pdf)
+   ========================================================================== */
+
+.passesContainer {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* Switcher Controls (Single vs Group Passes) */
+.switcherWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.passSwitcher {
+  display: inline-flex;
+  background: #0d0f22;
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  border-radius: 40px;
+  padding: 5px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.switcherBtn {
+  background: transparent;
+  border: none;
+  color: #94A3B8;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 0.5px;
+}
+
+.switcherBtn:hover {
+  color: #ffffff;
+}
+
+.switcherBtnActive {
+  background: linear-gradient(135deg, #FF2E93 0%, #D4146E 100%);
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(255, 46, 147, 0.5);
+}
+
+.tabSubtitle {
+  color: #CBD5E1;
+  font-size: 14px;
+  margin-top: 14px;
+  text-align: center;
+  font-weight: 400;
+}
+
+/* Ticket Grid */
+.ticketGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  align-items: stretch;
+  margin-top: 16px;
+}
+
+/* Tablet (2 columns) */
+@media (max-width: 1080px) and (min-width: 641px) {
+  .ticketGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+/* Mobile (stacked vertical single column) */
+@media (max-width: 640px) {
+  .ticketGrid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
+/* Base Ticket Card (Solid, Opaque, Portrait) */
+.ticketCard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #14172e; /* 100% solid, opaque dark navy/deep purple */
+  opacity: 1;
+  position: relative;
+  z-index: 2;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ticketCard:hover {
+  transform: translateY(-6px);
+}
+
+/* ==========================================================================
+   Color Themes Matching Reference PDF:
+   - Lavender (#B3ACFF)
+   - Warm Gold (#FBBF24)
+   - Cool Silver / Steel (#CBD5E1)
+   - Coral / Red (#FF6B6B)
+   ========================================================================== */
+
+/* 1. Theme: Lavender */
+.themeLavender {
+  border: 2px solid #B3ACFF;
+}
+
+.themeLavender:hover {
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7), 0 0 22px rgba(179, 172, 255, 0.4);
+}
+
+.themeLavender .cardHeader {
+  background: #B3ACFF;
+  color: #0d0f22;
+}
+
+.themeLavender .bulletDot {
+  background: #B3ACFF;
+  box-shadow: 0 0 6px rgba(179, 172, 255, 0.7);
+}
+
+.themeLavender .cardButton {
+  background: rgba(179, 172, 255, 0.12);
+  border: 1.5px solid #B3ACFF;
+  color: #F3E8FF;
+}
+
+.themeLavender .cardButton:hover {
+  background: #B3ACFF;
+  color: #0d0f22;
+  box-shadow: 0 0 18px rgba(179, 172, 255, 0.5);
+}
+
+/* 2. Theme: Warm Gold */
+.themeGold {
+  border: 2px solid #FBBF24;
+}
+
+.themeGold:hover {
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7), 0 0 22px rgba(251, 191, 36, 0.4);
+}
+
+.themeGold .cardHeader {
+  background: #FBBF24;
+  color: #0d0f22;
+}
+
+.themeGold .bulletDot {
+  background: #FBBF24;
+  box-shadow: 0 0 6px rgba(251, 191, 36, 0.7);
+}
+
+.themeGold .cardButton {
+  background: rgba(251, 191, 36, 0.12);
+  border: 1.5px solid #FBBF24;
+  color: #FEF3C7;
+}
+
+.themeGold .cardButton:hover {
+  background: #FBBF24;
+  color: #0d0f22;
+  box-shadow: 0 0 18px rgba(251, 191, 36, 0.5);
+}
+
+/* 3. Theme: Cool Silver / Steel */
+.themeSilver {
+  border: 2px solid #CBD5E1;
+}
+
+.themeSilver:hover {
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7), 0 0 20px rgba(203, 213, 225, 0.35);
+}
+
+.themeSilver .cardHeader {
+  background: #CBD5E1;
+  color: #0d0f22;
+}
+
+.themeSilver .bulletDot {
+  background: #CBD5E1;
+  box-shadow: 0 0 6px rgba(203, 213, 225, 0.7);
+}
+
+.themeSilver .cardButton {
+  background: rgba(203, 213, 225, 0.12);
+  border: 1.5px solid #CBD5E1;
+  color: #F1F5F9;
+}
+
+.themeSilver .cardButton:hover {
+  background: #CBD5E1;
+  color: #0d0f22;
+  box-shadow: 0 0 16px rgba(203, 213, 225, 0.5);
+}
+
+/* 4. Theme: Coral / Red */
+.themeCoral {
+  border: 2px solid #FF6B6B;
+}
+
+.themeCoral:hover {
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7), 0 0 24px rgba(255, 107, 107, 0.45);
+}
+
+.themeCoral .cardHeader {
+  background: #FF6B6B;
+  color: #0d0f22;
+}
+
+.themeCoral .bulletDot {
+  background: #FF6B6B;
+  box-shadow: 0 0 6px rgba(255, 107, 107, 0.7);
+}
+
+.themeCoral .cardButton {
+  background: rgba(255, 107, 107, 0.12);
+  border: 1.5px solid #FF6B6B;
+  color: #FFF1F2;
+}
+
+.themeCoral .cardButton:hover {
+  background: #FF6B6B;
+  color: #0d0f22;
+  box-shadow: 0 0 20px rgba(255, 107, 107, 0.55);
+}
+
+/* Top Header Bar */
+.cardHeader {
+  padding: 14px 16px;
+  text-align: center;
+  border-radius: 14px 14px 0 0;
+}
+
+.passTitle {
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.2;
+  color: #0b0d1e !important;
+}
+
+/* Card Body */
+.cardBody {
+  padding: 24px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  text-align: center;
+}
+
+/* Price Section */
+.priceSection {
+  margin-top: 2px;
+  margin-bottom: 2px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 104px;
+}
+
+.originalPrice {
+  font-size: 15px;
+  color: #94A3B8;
+  text-decoration: line-through;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 4px;
+  letter-spacing: 0.3px;
+}
+
+.priceValue {
+  font-size: 38px;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.05;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.priceLabel {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #CBD5E1;
+  margin-top: 6px;
+  line-height: 1.2;
+}
+
+.offerBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 46, 147, 0.16);
+  border: 1px solid rgba(255, 46, 147, 0.55);
+  color: #FF70B8;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 8px;
+  margin-top: 6px;
+  box-shadow: 0 0 10px rgba(255, 46, 147, 0.25);
+}
+
+/* Offer Countdown / Expiry Banner */
+.offerExpiryNotice {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 46, 147, 0.08);
+  border: 1px solid rgba(255, 46, 147, 0.25);
+  padding: 6px 14px;
+  border-radius: 20px;
+  color: #F9A8D4;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 10px;
+  letter-spacing: 0.3px;
+}
+
+/* Divider */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.14);
+  margin: 20px 0 22px;
+}
+
+/* Benefits Bullet List */
+.perksList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  text-align: center;
+  flex: 1;
+}
+
+.perkItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: #f1f5f9;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.bulletDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.perkText {
+  text-align: center;
+}
+
+/* Action Button */
+.cardButton {
+  margin-top: auto;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 25px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  box-sizing: border-box;
+}
+
+.cardButton:active {
+  transform: scale(0.98);
+}
+
+/* Footnote Below Ticket Cards */
+.footnoteText {
+  color: #94A3B8;
+  font-size: 13px;
+  text-align: center;
+  margin-top: 28px;
+  line-height: 1.6;
+}

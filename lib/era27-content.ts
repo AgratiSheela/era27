@@ -8,6 +8,27 @@
  * per client instructions.
  */
 
+import {
+  ERA27_BOOKING_CONFIG,
+  getBookingModeContent,
+  type Era27BookingMode,
+  type Era27BookingConfig,
+} from './era27-config';
+
+export {
+  ERA27_BOOKING_CONFIG,
+  getBookingModeContent,
+  type Era27BookingMode,
+  type Era27BookingConfig,
+};
+
+export {
+  ERA27_GOOGLE_FORM_URL,
+  ERA27_OFFER_CONFIG,
+  isPreBookingOfferActive,
+  getOfferExpiryFormattedIST,
+} from './era27-pricing';
+
 export interface EventMetadata {
   name: string;
   tagline: string;
@@ -72,6 +93,8 @@ export interface StallItem {
   name: string;
   description?: string;
   ageRestricted?: boolean;
+  image?: string;
+  emoji?: string;
 }
 
 export interface SponsorPackage {
@@ -411,20 +434,98 @@ export const ERA27_WALLET_STEPS = [
 // --------------------------------------------------------------------------
 
 export const ERA27_STALLS: StallItem[] = [
-  { category: 'Food', name: 'Pani Puri', description: 'Crispy street-style puri with spicy mint water and tangy fillings.' },
-  { category: 'Food', name: 'Momos', description: 'Steamed & fried momos with authentic chili dip.' },
-  { category: 'Food', name: 'Starters / Roti Curry', description: 'Fresh tawa rotis with rich cottage cheese and spiced curries.' },
-  { category: 'Food', name: 'Pulao / Biriyani', description: 'Fragrant Hyderabad-style celebratory rice bowls.' },
-  { category: 'Desserts', name: 'Fresh Waffles', description: 'Warm Belgian waffles with chocolate drizzle & toppings.' },
-  { category: 'Desserts', name: 'Artisan Ice Cream', description: 'Creamy scoops across classic and seasonal festival flavors.' },
-  { category: 'Desserts', name: 'Biscoff Cheesecake', description: 'Smooth baked cheesecake with caramelized lotus spread.' },
-  { category: 'Desserts', name: 'Belgian Chocolate Cheesecake', description: 'Decadent dark cocoa layered luxury cake.' },
-  { category: 'Drinks', name: 'Juices & Mocktails', description: 'Refreshing fruity coolers, citrus blends, and energetic sips.' },
-  { category: 'Drinks', name: 'Purified Water Stations', description: 'Bottled water and hydration counters.' },
-  { category: 'Drinks', name: 'Bar Counter (21+ Only)', description: 'Curated cocktails and festive shots. Strictly 21+ with physical ID verification.', ageRestricted: true },
-  { category: 'Fun Zone', name: 'Photo Booth', description: 'Themed neon photo ops with instant prints and digital sharing.' },
-  { category: 'Fun Zone', name: '3D Printing Zone', description: 'Live mini souvenirs and commemorative keepsakes.' },
-  { category: 'Fun Zone', name: '360° Round Video Taker', description: 'Slow-motion spinning platform capturing your festive glam.' },
+  {
+    category: 'Food',
+    name: 'Pani Puri',
+    description: 'Crispy street-style puri with spicy mint water and tangy fillings.',
+    image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=240&q=80',
+    emoji: '🍲',
+  },
+  {
+    category: 'Food',
+    name: 'Momos',
+    description: 'Steamed & fried momos with authentic chili dip.',
+    image: 'https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?auto=format&fit=crop&w=240&q=80',
+    emoji: '🥟',
+  },
+  {
+    category: 'Food',
+    name: 'Starters / Roti Curry',
+    description: 'Fresh tawa rotis with rich cottage cheese and spiced curries.',
+    image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=240&q=80',
+    emoji: '🍛',
+  },
+  {
+    category: 'Food',
+    name: 'Pulao / Biriyani',
+    description: 'Fragrant Hyderabad-style celebratory rice bowls.',
+    image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=240&q=80',
+    emoji: '🍚',
+  },
+  {
+    category: 'Desserts',
+    name: 'Fresh Waffles',
+    description: 'Warm Belgian waffles with chocolate drizzle & toppings.',
+    image: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=240&q=80',
+    emoji: '🧇',
+  },
+  {
+    category: 'Desserts',
+    name: 'Artisan Ice Cream',
+    description: 'Creamy scoops across classic and seasonal festival flavors.',
+    image: 'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&w=240&q=80',
+    emoji: '🍨',
+  },
+  {
+    category: 'Desserts',
+    name: 'Biscoff Cheesecake',
+    description: 'Smooth baked cheesecake with caramelized lotus spread.',
+    image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=240&q=80',
+    emoji: '🍰',
+  },
+  {
+    category: 'Desserts',
+    name: 'Belgian Chocolate Cheesecake',
+    description: 'Decadent dark cocoa layered luxury cake.',
+    image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=240&q=80',
+    emoji: '🍫',
+  },
+  {
+    category: 'Drinks',
+    name: 'Juices & Mocktails',
+    description: 'Refreshing fruity coolers, citrus blends, and energetic sips.',
+    image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=240&q=80',
+    emoji: '🍹',
+  },
+  {
+    category: 'Drinks',
+    name: 'Purified Water Stations',
+    description: 'Bottled water and hydration counters.',
+    image: 'https://images.unsplash.com/photo-1548839140-29a749e1bc4e?auto=format&fit=crop&w=240&q=80',
+    emoji: '💧',
+  },
+  {
+    category: 'Drinks',
+    name: 'Bar Counter (21+ Only)',
+    description: 'Curated cocktails and festive shots. Strictly 21+ with physical ID verification.',
+    ageRestricted: true,
+    image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=240&q=80',
+    emoji: '🍸',
+  },
+  {
+    category: 'Fun Zone',
+    name: 'Photo Booth',
+    description: 'Themed neon photo ops with instant prints and digital sharing.',
+    image: 'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=240&q=80',
+    emoji: '📸',
+  },
+  {
+    category: 'Fun Zone',
+    name: '360° Round Video Taker',
+    description: 'Slow-motion spinning platform capturing your festive glam.',
+    image: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=240&q=80',
+    emoji: '🎥',
+  },
 ];
 
 // --------------------------------------------------------------------------
